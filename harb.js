@@ -45,12 +45,14 @@ function aoa_to_sheet(data, opts) {
 			var cell = {v: data[R][C] };
 			if(cell.v == null) continue;
 			var cell_ref = encode_cell({c:C,r:R});
-			if(typeof cell.v === 'number') cell.t = 'n';
+      if(typeof cell.v === 'object') { cell = cell.v;} // includes cell data type and optional formula from social calc 
+      else if(typeof cell.v === 'number') cell.t = 'n';
 			else if(typeof cell.v === 'boolean') cell.t = 'b';
 			else if(cell.v instanceof Date) {
 				cell.t = 'n'; cell.z = ssf._table[14];
 				cell.v = datenum(cell.v);
 			}
+      else if(/^=/.test(cell.v) ) { cell.f = cell.v.substring(1); cell.t = 'n';} // csv formulas - convert to formula type like other spreadsheets do
 			else cell.t = 's';
 			ws[cell_ref] = cell;
 		}
@@ -70,7 +72,7 @@ var csv_to_aoa = function (str, opts) {
     var k = keys[i];
     o[k] = bpopts[k];
   }
-  keys = Object.keys(opts);
+  keys = Object.keys(opts == null ? {} : opts);
   for (var i = 0, len = keys.length; i < len; ++i) {
     var k = keys[i];
     o[k] = opts[k];
@@ -181,12 +183,14 @@ var socialcalc_to_aoa = function(str) {
 		if(arr.length <= addr.r) for(R = arr.length; R <= addr.r; ++R) if(!arr[R]) arr[R] = [];
 		R = addr.r; C = addr.c;
 		switch(record[2]) {
-			case 't': arr[R][C] = record[3]; break;
+			case 't': arr[R][C] = {v:record[3],t:'s'}; break; // text cell -don't convert to other type
 			case 'v': arr[R][C] = +record[3]; break;
 			case 'vtc': case 'vtf':
 				switch(record[3]) {
 					case 'nl': arr[R][C] = +record[4] ? true : false; break;
-					default: arr[R][C] = +record[4]; break;
+					default: if(record[2] == 'vtf') { arr[R][C] = {f:record[5], t:'n', v:record[4]} } // formula is of type number, note OpenDoc =CONCATENATE() etc auto change the type from number to text
+					         else {arr[R][C] = +record[4];}
+					break;
 				} break;
 		}
 	}
