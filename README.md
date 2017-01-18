@@ -25,7 +25,7 @@ for [LTS version](https://github.com/SheetJS/js-harb)
 
 In [nodejs](https://www.npmjs.org/package/harb):
 
-    npm install harb
+    npm install harb-org
 
 ## Usage
 
