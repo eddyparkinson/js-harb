@@ -3,10 +3,6 @@
 Host of Archaic Representations of Books (parsing).  Designed to provide support
 for [j](https://github.com/SheetJS/j).  Pure-JS cleanroom implementation.
 
-# versions
-This version: Current - latest features
-for [LTS version](https://github.com/SheetJS/js-harb) 
-
 Currently supported formats:
 
 - DIF (Data Interchange Format)
@@ -18,6 +14,12 @@ Planned but not currently implemented:
 
 - SC (Spreadsheet Calculator)
 - PRN (Space-Delimited Format)
+
+# versions
+
+This version: Current - latest features
+
+for [LTS version](https://github.com/SheetJS/js-harb) 
 
 ## Installation
 
