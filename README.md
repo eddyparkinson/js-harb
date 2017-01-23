@@ -15,11 +15,17 @@ Planned but not currently implemented:
 - SC (Spreadsheet Calculator)
 - PRN (Space-Delimited Format)
 
+# versions
+
+This version: Current - latest features
+
+for [LTS version](https://github.com/SheetJS/js-harb) 
+
 ## Installation
 
 In [nodejs](https://www.npmjs.org/package/harb):
 
-    npm install harb
+    npm install harb-org
 
 ## Usage
 
